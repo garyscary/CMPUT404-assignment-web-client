@@ -83,14 +83,15 @@ class HTTPClient(object):
         host = self.get_host(host)
 
         path = parsedUrl.path
+        if not path:
+            path = "/"
         port = parsedUrl.port
-        if type(port) == "NoneType":
+        if port == None:
             port = 80
 
         self.connect(host, port)
 
         request = "GET {rPath} HTTP/1.1\r\nHost: {rHost}:{rPort}\r\nConnection: close\r\n\r\n".format(rPath=path, rHost=host, rPort=port)
-
         self.sendall(request)
 
         response = self.recvall(self.socket)
@@ -111,7 +112,7 @@ class HTTPClient(object):
 
         path = parsedUrl.path
         port = parsedUrl.port
-        if type(port) == "NoneType":
+        if port == None:
             port = 80
 
         params = ""
